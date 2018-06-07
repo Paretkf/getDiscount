@@ -1,0 +1,101 @@
+[debug] [2018-06-07T07:02:53.508Z] ----------------------------------------------------------------------
+[debug] [2018-06-07T07:02:53.511Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Pare\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy --only functions
+[debug] [2018-06-07T07:02:53.511Z] CLI Version:   3.18.6
+[debug] [2018-06-07T07:02:53.511Z] Platform:      win32
+[debug] [2018-06-07T07:02:53.511Z] Node Version:  v8.9.4
+[debug] [2018-06-07T07:02:53.512Z] Time:          Thu Jun 07 2018 14:02:53 GMT+0700 (SE Asia Standard Time)
+[debug] [2018-06-07T07:02:53.512Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-06-07T07:02:53.534Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-06-07T07:02:53.536Z] > authorizing via signed-in user
+[debug] [2018-06-07T07:02:53.539Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/promocode-95a0c  
+  
+ Thu Jun 07 2018 14:02:53 GMT+0700 (SE Asia Standard Time)
+[debug] [2018-06-07T07:02:54.748Z] <<< HTTP RESPONSE 200
+[debug] [2018-06-07T07:02:54.750Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/promocode-95a0c/tokens  
+  
+ Thu Jun 07 2018 14:02:54 GMT+0700 (SE Asia Standard Time)
+[debug] [2018-06-07T07:02:55.632Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'promocode-95a0c'...
+[info] 
+[info] i  deploying functions
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] +  functions: Finished running predeploy script.
+[debug] [2018-06-07T07:03:06.449Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase serve --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+    "firebase-admin": "~5.12.1",
+    "firebase-functions": "^1.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.12.0",
+    "eslint-plugin-promise": "^3.6.0"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[debug] [2018-06-07T07:03:06.450Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/promocode-95a0c?view=CONSUMER_VIEW  
+  
+ Thu Jun 07 2018 14:03:06 GMT+0700 (SE Asia Standard Time)
+[debug] [2018-06-07T07:03:06.450Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/promocode-95a0c?view=CONSUMER_VIEW  
+  
+ Thu Jun 07 2018 14:03:06 GMT+0700 (SE Asia Standard Time)
+[debug] [2018-06-07T07:03:08.254Z] <<< HTTP RESPONSE 200
+[debug] [2018-06-07T07:03:08.282Z] <<< HTTP RESPONSE 200
+[info] +  functions: all necessary APIs are enabled
+[debug] [2018-06-07T07:03:08.285Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/promocode-95a0c  
+  
+ Thu Jun 07 2018 14:03:08 GMT+0700 (SE Asia Standard Time)
+[debug] [2018-06-07T07:03:09.701Z] <<< HTTP RESPONSE 200
+[debug] [2018-06-07T07:03:09.702Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/302114698777:getServerAppConfig  
+  
+ Thu Jun 07 2018 14:03:09 GMT+0700 (SE Asia Standard Time)
+[debug] [2018-06-07T07:03:10.514Z] <<< HTTP RESPONSE 200
+[info] i  functions: preparing functions directory for uploading...
+[debug] [2018-06-07T07:03:10.520Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/promocode-95a0c/configs  
+  
+ Thu Jun 07 2018 14:03:10 GMT+0700 (SE Asia Standard Time)
+[debug] [2018-06-07T07:03:11.091Z] <<< HTTP RESPONSE 200
+[info] i  functions: packaged functions (49.17 KB) for uploading
+[debug] [2018-06-07T07:03:11.984Z] >>> HTTP REQUEST POST https://cloudfunctions.googleapis.com/v1/projects/promocode-95a0c/locations/us-central1/functions:generateUploadUrl  
+  
+ Thu Jun 07 2018 14:03:11 GMT+0700 (SE Asia Standard Time)
+[debug] [2018-06-07T07:03:42.273Z] <<< HTTP RESPONSE 503
+[debug] [2018-06-07T07:03:42.273Z] <<< HTTP RESPONSE BODY {
+  "error": {
+    "code": 503,
+    "message": "The service is currently unavailable.",
+    "status": "UNAVAILABLE"
+  }
+}
+
+[debug] [2018-06-07T07:03:42.276Z] TypeError: Cannot create property 'error' on string '{
+  "error": {
+    "code": 503,
+    "message": "The service is currently unavailable.",
+    "status": "UNAVAILABLE"
+  }
+}
+'
+    at module.exports (C:\Users\Pare\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:11:16)
+    at Request._callback (C:\Users\Pare\AppData\Roaming\npm\node_modules\firebase-tools\lib\api.js:47:25)
+    at Request.self.callback (C:\Users\Pare\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:185:22)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request.<anonymous> (C:\Users\Pare\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1157:10)
+    at emitOne (events.js:116:13)
+    at Request.emit (events.js:211:7)
+    at IncomingMessage.<anonymous> (C:\Users\Pare\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1079:12)
+    at Object.onceWrapper (events.js:313:30)
+[error] 
+[error] Error: An unexpected error has occurred.
