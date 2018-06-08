@@ -12,17 +12,11 @@ exports.getDiscount = functions.https.onRequest((req, res) => {
         .then(c => {
             if (c.exists) {
                 res.send(c.data())
-                db.collection('logs').add({
-                    time: new Date(),
-                    findCode: code,
-                    raw:c.data()})
+                setLog (c.data(), 'findCode', code)
             } else {
                 console.log('No such Code')
                 res.send(null)
-                db.collection('logs').add({
-                    time: new Date(),
-                    findCode: code,
-                    raw: 'No such Code'})
+                setLog ('No such Code', 'findCode', code)
             }
             return c.data()
         })
@@ -33,7 +27,7 @@ exports.checkOut = functions.https.onRequest((req, res) => {
     let tel = req.query.tel
     let net = req.query.net
     let code = req.query.code
-    if(code){
+    if (req.query.code) {
         const getCode = db.collection('promoCode').doc(code).get()
             .then(c => {
                 if (c.exists && c.data().status === 'unused') {
@@ -41,37 +35,44 @@ exports.checkOut = functions.https.onRequest((req, res) => {
                         status: 'used'
                     })
                     if (c.data().discount_type === 'Baht') {
+                        setLog (c.data(), 'useCode', code)
                         net = net - (c.data().discount_number)
+                    } else if (c.data().discount_type === '%') {
+                        setLog (c.data(), 'useCode', code)
+                        net = net - ((net * c.data().discount_number) / 100)
                     }
                 } else {
-                    console.log('No such Code')
+                    setLog ('No such Code or Code Used', 'useCode', code)
                     res.send(null)
                 }
                 return c.data()
             })
     }
 
-        let getVip = db.collection('vip').doc(tel).get()
-            .then(c => {
-                if (c.exists && net >= 3000) {
-                    let generatedCode = genCode()
-                    let date = new Date()
-                    let data = {
-                        create_date: date,
-                        discount_number: 300,
-                        discount_type: 'Baht',
-                        exp_date: date,
-                        status: 'unused',
-                        type: 'onetime'
-                    }
-                    db.collection('promoCode').doc(generatedCode).set(data);
-                    res.send(generatedCode)
-                } else {
-                    console.log('No such Tel')
-                    res.send(null)              
+    let getVip = db.collection('vip').doc(tel).get()
+        .then(c => {
+            if (c.exists && net >= 3000) {
+                let generatedCode = genCode()
+                let date = new Date()
+                let dateExp = new Date(date.getFullYear(), date.getMonth()+3, date.getDay(), date.getHours(), date.getMinutes(), date.getSeconds())
+                let newCode = {
+                    create_date: date,
+                    discount_number: 300,
+                    discount_type: 'Baht',
+                    exp_date: dateExp,
+                    status: 'unused',
+                    type: 'onetime'
                 }
-                return c.data()
-            })
+                db.collection('promoCode').doc(generatedCode).set(newCode)
+                res.send(generatedCode)
+                setLog (newCode, 'genCode', generatedCode)
+            } else {
+                console.log('No such Tel or Net < 3000')
+                res.send(null)
+                setLog ('No such Tel or Net < 3000', 'genCode', null)
+            }
+            return c.data()
+        })
 })
 
 function genCode() {
@@ -80,4 +81,13 @@ function genCode() {
     for (var i = 0; i < 5; i++)
       code += message.charAt(Math.floor(Math.random() * message.length))
     return code
+  }
+
+  function setLog (raw, state, code) {
+    db.collection('logs').add({
+        time: new Date(),
+        state: state,
+        code: code,
+        raw: raw
+    })
   }
